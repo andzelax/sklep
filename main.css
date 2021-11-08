@@ -1,0 +1,233 @@
+.bg-dark{
+    border: none;
+    color: aliceblue;
+}
+main{
+    padding-top: 20px;
+    min-height: calc(100vh - 57px - 192px);
+}
+.row .row{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+footer .card{
+    background-color: black;
+    color: aliceblue;
+    border-radius: 0px;
+}
+.fixed-top{
+    position: sticky;
+    height: 57px;
+}
+
+.fixed-top > .row{
+    margin-right: unset;
+
+}
+.fixed-top > .row{
+    margin-left: unset;
+
+}
+@media (min-width: 991px){
+    .col-lg-3.btn-group-vertical.btn-group-dark.d-flex.align-self-start{
+        position:fixed;
+    }
+}
+
+@media (max-width: 768px){
+    .col-md.card{
+        padding-top: 15px;
+    }
+}
+@media (max-width: 768px){
+    .card-title{
+        padding-top: 15px;
+    }
+}
+@media (max-width: 768px){
+    .col-md-4.card.m{
+        padding-top: 15px;
+    }
+}
+@media (max-width: 768px){
+    .card-title.m{
+        padding-top: 15px;
+    }
+}
+@media (max-width: 991px){
+    .bg-white.me-2{
+        float: right;
+    }
+}
+@media (max-width: 991px){
+    .col-lg-4.align-self-center{
+        padding-top: 10px;
+    }
+}
+@media (max-width: 991px){
+    .form.card.card-body.form-floating{
+        float: inherit;
+    }
+}
+@media (min-width: 991px){
+.col-lg-9.col-md-12.tab-content{
+    padding-right: 20px;
+}}
+.navbar-toggler{
+    border: 0px;
+}
+.row.m{
+    padding-left: 15px; 
+    padding-right: 5px;
+}
+.btn.nav.flex-column.nav-pills.m-2{
+    padding-right: 15px;
+}
+.row.n{
+    margin: auto;
+}
+.col.text-center{
+    margin: 0 auto;
+}
+.col-md.card.m-0{
+        padding-top: 15px;
+}
+.card-title.m-0{
+        padding-top: 15px;
+    }
+.modal-title{
+    color: black;
+}
+.form-control{
+    color: gray;
+    border-color: rgb(214, 213, 213); 
+}
+td{
+    padding-top: 3px;
+}
+label{
+    color: black; 
+    font-weight: 500;
+}
+.form-floating{
+    float: left;
+}
+.card-text {
+    color:aliceblue;
+    padding-left: 10px;
+}
+.card-title{
+    color: aliceblue;
+    padding-left: 10px;
+}
+.div .figure{
+    float: center;
+}
+button.active {
+    border-radius: 4px;
+    background-color: gray!important;
+    border-color: gray;
+    color: gray;
+    border: 0px;
+}
+button.nav-link.active {
+    border-radius: 4px;
+    background-color: black!important;
+    border: 0px;
+}
+.btn-dark.bg-white.form-control{
+    color: black;
+}
+p{
+    padding-top: 20px;
+    padding-left: 35px;
+}
+h2{
+    padding-top: 50px;
+    padding-left: 30px;
+}
+h1{
+    padding-top: 50px;
+    padding-left: 30px;
+}
+a.link{
+    color: white;
+    font-size:xx-large;
+    font-weight: bold;
+}
+a.link:hover{
+    color: white;
+    text-decoration-line: underline;
+}
+.d-grid{
+    padding-bottom: 30px;
+
+}
+.form{
+    padding-left: 30px;
+}
+.form.card{
+    padding-right: 30px;
+}
+.row .col{
+    padding-right: 20px;
+}
+.accordion-button:not(.collapsed){
+    color: black;
+    background-color: white;
+}
+.accordion-button:focus{
+    border-color: rgb(255, 255, 255);
+    box-shadow: 0 0 0 0.25rem rgb(255 255 255 / 25%);
+    
+}
+.accordion-button:not(.collapsed)::after{
+    color: black;
+    background-color: white(0, 0, 0);
+}
+.accordion-button:not(.collapsed)::after{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+.rounded-circle {
+    
+    border-radius: 1.25rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-bottom-width: 1px;
+    border: 0px;
+}
+.rounded-circle .text{
+    display: inline-block;
+    text-align: center;
+}
+a{
+    text-decoration: none;
+    color: gray;
+}
+a:hover{
+    color:gray;
+}
+.row iframe{
+    padding-left: 30px;
+    align-self: flex-end;
+}
+div.col-md.card{
+    border: 0px;
+}
+div.col-md-4.card{
+    border: 0px;
+}
+div.col-md-8.card{
+    border: 0px;
+}
+.col.text-center {
+    padding-right:45px;
+}
+iframe{
+    border: 0;
+    width: 600px;
+    height: 450px;
+    
+}

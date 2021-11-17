@@ -1,6 +1,7 @@
 <?php
 require_once 'database.php';
 include 'navbar.php';
+session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,32 +24,46 @@ include 'navbar.php';
                 <div class="d-flex justify-content-center">
                 <div class="row">
                   <div class="col-lg-12">
-            <div class="form card card-body mb-2 "  >
+                    <?php if(empty($_SESSION['user'])) {
+                    echo'
+                    <form method="POST" action="zalogowanie.php">
+                    <div class="form card card-body mb-2 "  >
               <div class="row">
                 <div class="row">
                 <h5 class="col-md-12 form-floating mb-3 text-center">Zaloguj się</h5>
                 </div>
                 <div class="mb" >
-                  <form class="col-12 d-flex form-floating">
-                  <input type="email" class="form-control me-2 bg-white btn-dark" style="color: black;" id="floatingInput" placeholder="name@example.com">
+                  <div class="col-12 d-flex form-floating">
+                  <input required name="email"  type="email" class="form-control me-2 bg-white btn-dark" style="color: black;" id="floatingInput" placeholder="name@example.com">
                   <label for="floatingInput">Email</label>
-                  </form>
+                  </div>
                 </div>
                 </div>
                 <div class="row">
                 <div class="mb-2">
-                 <form class="col-12 d-flex form-floating">
-                  <input type="password" class="form-control me-2 bg-white btn-dark" style="color: black;" id="floatingPassword" placeholder="Password">
+                 <div class="col-12 d-flex form-floating">
+                  <input required name="passw" type="password" class="form-control me-2 bg-white btn-dark" style="color: black;" id="floatingPassword" placeholder="Password">
                   <label for="floatingPassword">Hasło</label>
-                  </form>
+                  </div>
                 </div>
                 </div>
                 <div class="row">
-                  <button type="submit" class="btn btn-dark">Zaloguj</button>
+                  <button name="submit" type="submit" class="btn btn-dark">Zaloguj</button>
                 </div>
             </div> 
-            <div class="text-center col-lg-12">Nie masz jeszcze konta? <a class="text-center" style="color:black;" href="rejestracja.php">Załóż</a>
+            </form><div class="text-center col-lg-12">Nie masz jeszcze konta? <a class="text-center" style="color:black;" href="rejestracja.php">Załóż</a>
             </div>
+                    ';
+                    
+                  }
+                     else {echo' <p>Zalogowano jako '.$_SESSION['user'].'</p>';
+                      echo '<a class="btn btn-dark" href="wylogowanie.php" name="logout" role="button">Wyloguj</a>';
+                      
+                      }
+                      
+                      ?>
+            
+            
                   </div>
                 </div>
             </div>

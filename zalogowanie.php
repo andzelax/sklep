@@ -1,6 +1,8 @@
 <?php
 require_once 'database.php';
-            session_start();
+//error_reporting(E_ALL ^ E_NOTICE);
+session_start();
+
               if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
                 
                 $stmt = $pdo->prepare('SELECT * FROM logowanie WHERE email = :email AND haslo = :passw');

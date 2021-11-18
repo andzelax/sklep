@@ -1,7 +1,9 @@
 <?php
 require_once 'database.php';
 include 'navbar.php';
-session_start();
+//error_reporting(E_ALL ^ E_NOTICE);
+    session_start();
+
 ?>
 <!doctype html>
 <html lang="en">

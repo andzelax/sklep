@@ -3,7 +3,7 @@ require_once("database.php");
 function t1($val, $min, $max) {
   return ($val >= $min && $val <= $max);
 }
-$count = $pdo->query( 'SELECT COUNT( id_prod) as cnt FROM produkty' )->fetch()['cnt'];
+$count = $pdo->query( 'SELECT COUNT( id_zdj) as cnt FROM galeria' )->fetch()['cnt'];
 
 $page = isSet( $_GET['card'] ) ? intval( $_GET['card'] - 1 ) : 0;
 
@@ -13,7 +13,7 @@ $from = $page * $limit;
 
 $allPage = ceil( $count / $limit );
 
-$stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
+$stmt=$pdo->query('SELECT * from galeria LIMIT ' . $from . ', ' . $limit);
 ?>
 <body>
       <div class="content">
@@ -21,17 +21,16 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
         
          <div class="col-md-14">
             
-                <div class="col-md-2 offset-md-10"> <a class="btn btn-dark" href="panel.php?page=add_product" name="add_product" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <div class="col-md-2 offset-md-10"> <a class="btn btn-dark" href="panel.php?page=add_photo" name="add_photo" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
   <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 </svg> Dodaj</a></div> 
                 <br>
-                  <table class="table table-striped " id="prod">
-                    <thead class="produkty">
+                  <table class="table table-striped ">
+                    <thead class="zdjecia">
                       <tr>
                         <th>Zdjęcie</th>
-                        <th>Nazwa</th>
-                        <th>Cena</th>
+                        <th>Produkt</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -45,9 +44,7 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
                             print("<tr><td>");
                            echo '<img src="img/'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
                            print("</td><td>");
-                           echo $rekord["nazwa"];
-                           print("</td><td>");
-                           echo $rekord["cena"];
+                           echo $rekord["id_produktu"];
                            print("</td><td>");
                         }
                         $stmt->closeCursor();
@@ -62,7 +59,7 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
                  ';
                  
                  if( $page > 4 ) {
-                     echo '<li class="page-item"><a class="page-link" href="panel.php?page=produkty&card=1"> < pierwsza strona </a></li>  ';
+                     echo '<li class="page-item"><a class="page-link" href="panel.php?page=galeria&card=1"> < pierwsza strona </a></li>  ';
                  }
                  
                  for( $i = 1; $i <= $allPage; $i++ ) {
@@ -72,14 +69,14 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
              
                      if( t1( $i, ( $page -3 ), ( $page + 5 ) ) ) {
              
-                         echo '<li class="page-item"><a class="page-link" ' . $bold . ' href="panel.php?page=produkty&card=' . $i . '">' . $i . '</a></li>  ';
+                         echo '<li class="page-item"><a class="page-link" ' . $bold . ' href="panel.php?page=galeria&card=' . $i . '">' . $i . '</a></li>  ';
              
                      }
              
                  }
              
                   if( $page < ( $allPage - 1 ) ) {
-                      echo '<li class="page-item"><a class="page-link" href="panel.php?page=produkty&card=' . $allPage . '">ostatnia strona > </a></li>  ';
+                      echo '<li class="page-item"><a class="page-link" href="panel.php?page=galeria&card=' . $allPage . '">ostatnia strona > </a></li>  ';
                   }'</ul>'
              ?>
           

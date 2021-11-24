@@ -6,7 +6,7 @@ require_once("database.php");
 </script>
       <div class="content">
         <div class="container-fluid">
-          <form action="" id="manage-prod">
+          <form action="add_product.php" method="post" id="manage-prod">
           <div class="row">
           
                 
@@ -16,7 +16,6 @@ require_once("database.php");
                 <h5 class="title">Produkt</h5>
               </div>
               <div class="card-body">
-              <form method="post" action="add_product.php" id="form">
               <div class="row">
               <div class="col-md-12">
                       <div class="form-group">
@@ -45,7 +44,7 @@ require_once("database.php");
                       </div>
                     </div>
               </div>
-              </form>
+              
               </div>
               
             </div>
@@ -60,33 +59,44 @@ require_once("database.php");
                   <div class="row">
                     
                     <div class="col-md-12">
+                      
                       <div class="form-group">
-                        <label for="id_nadrz" class="form-label">Nadrzedna: </label>
-        <p><select name="id_nadrz" id="id_nadrz" class="form-select" >
-            <option></option>
-        <?php
-                
-      
-                $kat = $pdo->query('SELECT * FROM kategorie where id_nadrz is null');
-                foreach($kat as $row)
-                {
-                   if($row['id_kat']==$_POST['id_nadrz'])
-                   echo'<option selected="selected" value='.$row['id_kat'].'>'.$row['kategoria'].'</option>';
-                   else
-                   echo'<option value='.$row['id_kat'].'>'.$row['kategoria'].'</option>';
+                      <label for="id_nadrz" class="form-label">Kategoria główna: </label>
+                        <select id="id_nadrz" name="id_nadrz" class="form-select">
+                                            <?php
 
-                                }
-                $kat->closeCursor();
-            ?>
-        </select></p>
-                      </div>
+                    $kat=$pdo->query ('select * from kategorie where id_nadrz is null');
+                       foreach($kat as $rekord)
+                       {
+                         echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
+                                          
+                       }
+                   
+$kat->closeCursor();
+?>
+   </select> 
+</div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label for="kategoria" class="form-label">Podrzedna: </label>
-        <p><select name="kategoria" id="kategoria" class="form-select" >
-      
-        </select></p>
+                        <label for="kategoria" class="form-label">Kategoria podrzędna: </label>
+        <select name="kategoria" id="kategoria" class="form-select" >
+        <?php
+ $nad=$pdo->query ('select * from kategorie where id_nadrz is null');
+ foreach($nad as $row)
+ {
+$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$row['id_kat']);
+   foreach($kat as $rekord)
+   {
+     echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
+                      
+   }
+
+$kat->closeCursor();
+  }
+  $nad->closeCursor();
+?>
+        </select>
                       </div>
                     </div>
                      
@@ -96,7 +106,7 @@ require_once("database.php");
                 
               </div>
               <div class="card-footer">
-                  <button type="submit" id="btn_save" name="btn_save" required class="btn btn-fill btn-primary">Save Product</button>
+                  <button type="submit" id="dodaj" name="dodaj" required class="btn btn-fill btn-primary">Save Product</button>
               </div>
             </div>
           </div>
@@ -106,56 +116,11 @@ require_once("database.php");
           
         </div>
       </div>
-      <?php
 
-
-try
-{
-    
-    if(isset($_POST['btn_save']) && $_POST['nazwa']!='' && $_POST['opis']!='' && $_POST['cena']!='' && $_POST['id_kat']!=''
-    && $_POST['zdjecie']!='')
-    {  
-        $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        $stmt = $pdo -> prepare('INSERT INTO `produkty` (`nazwa`, `opis`, `cena`, `kategoria`, `zdjecie`)  VALUES(
-                :nazwa,
-        :opis,
-        :cena,
-        :kategoria,
-                :zdjecie)');  
-                $stmt -> bindValue(':nazwa', $_POST['nazwa'], PDO::PARAM_STR);
-                $stmt -> bindValue(':opis', $_POST['opis'], PDO::PARAM_STR);
-                $stmt -> bindValue(':cena', (float)$_POST['cena'], PDO::PARAM_STR);
-                $stmt -> bindValue(':kategoria', $_POST['ID_SZEFA'], PDO::PARAM_INT);
-                $stmt -> bindValue(':zdjecie', $_POST['zdjecie'], PDO::PARAM_STR);
-                
-               $ilosc  = $stmt -> execute();
-        
-        if($ilosc > 0 )
-        {
-            echo 'Pomyślnie dodano: '.$ilosc.' rekordów';
-            echo '<meta http-equiv="refresh" content="1;url=./index.php">';
-        }
-        
-    }
-
-    elseif(isset($_POST['dodaj']))
-    {
-        
-        echo '
-        Uzupełnij wymagane pola!
-        ';  
-    }
-}
-catch(PDOException $e)
-{
-    echo 'Wystapił blad biblioteki PDO: ' . $e->getMessage();
-}
-?>
      <script>
          
          $(document).ready(function() {
-$('#id_nadrz').on('click', function() {
+$('#id_nadrz').on('change', function() {
 var category_id = this.value;
 $.ajax({
 url: "kat_podrz_action.php",
@@ -170,7 +135,6 @@ $("#kategoria").html(result);
 });
 });
 });
-
 
 
        function displayImg(input,_this) {
@@ -188,3 +152,32 @@ $("#kategoria").html(result);
           }
       }
      </script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <?php
+    if(isset($_POST['dodaj'])){
+
+      $picture_name=$_FILES['picture']['name'];
+      $picture_type=$_FILES['picture']['type'];
+      $picture_tmp_name=$_FILES['picture']['tmp_name'];
+      $picture_size=$_FILES['picture']['size'];
+     
+
+        if($picture_type=="image/jpeg" || $picture_type=="image/jpg" || $picture_type=="image/png" || $picture_type=="image/gif")
+        {
+          if($picture_size<=50000000)
+          
+            $pic_name=time()."_".$picture_name;
+            move_uploaded_file($picture_tmp_name,"../img/".$pic_name);
+          
+        }
+      $id=$_POST['dodaj'];
+     $nazwa = $_POST['nazwa'];
+     $opis = $_POST['opis'];
+      $cena = $_POST['cena'];
+      $id_kat = $_POST['kategoria'];
+      $zdjecie = $_POST['zdjecie'];                         
+     $stmt = $pdo->prepare("INSERT into produkty (nazwa, opis, cena,kategoria,zdjecie) VALUES (?, ?, ?,?,?)");
+     $stmt->execute([$nazwa, $opis, $cena,$id_kat,$zdjecie]);
+     $pdo=null;
+     echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=produkty">';
+ }
+?>

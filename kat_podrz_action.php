@@ -10,6 +10,9 @@ while($row =  $result->fetch(PDO::FETCH_BOTH))
                     else
                     echo'<option value='.$row['id_kat'].'>'.$row['kategoria'].'</option>';
 
-                                }
-                                $result->closeCursor();
+                }
+$result->closeCursor();
+
+
+
 ?>

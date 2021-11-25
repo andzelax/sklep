@@ -1,5 +1,4 @@
 <?php
-
 $host = 'localhost';
 $dbname = 'sklep';
 $user = 'root';
@@ -13,5 +12,4 @@ try {
     echo 'Połączenie nie mogło zostać utworzone: ' . $e->getMessage();
     exit();
 }
-
 ?>

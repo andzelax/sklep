@@ -31,8 +31,9 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
                       <tr>
                         <th>Zdjęcie</th>
                         <th>Nazwa</th>
+                        <th style="width: 25em;">Opis</th>
                         <th>Cena</th>
-                        <th></th>
+                        <th>Akcje</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -43,20 +44,28 @@ $stmt=$pdo->query('SELECT * from produkty LIMIT ' . $from . ', ' . $limit);
                         foreach($result as $rekord)
                         {
                             print("<tr><td>");
-                           echo '<img src="img/'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
+                           echo '<img src="/'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
                            print("</td><td>");
                            echo $rekord["nazwa"];
                            print("</td><td>");
-                           echo $rekord["cena"];
+                           echo $rekord["opis"];
                            print("</td><td>");
+                           echo $rekord["cena"];
+                           print('<td>
+          <div class="btn-group">
+          <button type="button" name="edit" class="btn btn-warning"><a href="panel.php?page=edit_product&id_prod='.$rekord['id_prod'].'"">edytuj</a></button>
+                        
+<form action="delete_product.php" method="POST" onsubmit="return confirm(\'Czy na pewno chcesz usunąć '.$rekord["nazwa"].'?\');">
+        <button name="delete" type="submit" value='.$rekord["id_prod"].' class="btn btn-danger">Usuń</button>
+        </form></div>
+        </td>');
                         }
                         $stmt->closeCursor();
                         ?>
                     </tbody>
                   </table>
                   
-                  <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
-             <?php
+            <?php
                  echo '
                  <ul class="pagination">
                  ';

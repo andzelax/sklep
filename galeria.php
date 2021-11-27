@@ -42,7 +42,7 @@ $stmt=$pdo->query('SELECT * from galeria LIMIT ' . $from . ', ' . $limit);
                         foreach($result as $rekord)
                         {
                             print("<tr><td>");
-                           echo '<img src="img/'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
+                           echo '<img src="'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
                            print("</td><td>");
                            echo $rekord["id_produktu"];
                            print("</td><td>");
@@ -51,7 +51,6 @@ $stmt=$pdo->query('SELECT * from galeria LIMIT ' . $from . ', ' . $limit);
                         ?>
                     </tbody>
                   </table>
-                  
                   <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
              <?php
                  echo '

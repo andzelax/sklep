@@ -1,9 +1,13 @@
 <?php
 require_once("database.php");
+$id = $_GET['id_prod'];
+$stmt = $pdo->prepare("SELECT * from produkty WHERE id_prod=" . $id);
+$stmt->execute();
+$result = $stmt->fetch();
 ?>
       <div class="content">
         <div class="container-fluid">
-          <form action="add_product.php" method="post" id="manage-prod" enctype="multipart/form-data">
+          <form action="edit_product.php" method="post" id="manage-prod" enctype="multipart/form-data">
           <div class="row">
          <div class="col-md-7">
             <div class="card">
@@ -15,31 +19,70 @@ require_once("database.php");
               <div class="col-md-12">
                       <div class="form-group">
                         <label for="nazwa">Nazwa</label>
-                        <input type="hidden"  name="id_prod" class="form-control" value="<?php if(isset($_POST['id_prod'])) echo $_POST['id_prod']  ?>">
-                        <input type="text" id="nazwa" required name="nazwa" class="form-control" value="<?php if(isset($_POST['nazwa'])) echo $_POST['nazwa']   ?>">
+                        <input type="text" id="nazwa" required name="nazwa" class="form-control" value="<?php if(isset($_POST['nazwa'])) echo $_POST['nazwa']; else echo $result['nazwa'];  ?>">
                       </div>
                     </div>
                     <br/>
                     <div class="row">
                     <div class="col-md-6">
+                        
                         <label for="zdjecie">Zdjęcie produktu</label>
-                        <input type="file" name="zdjecie" <?php if(isset($_POST['zdjecie'])) echo $_POST['zdjecie'] ? 'required' : '' ?> class="btn btn-fill" id="zdjecie" onchange="displayImg(this,$(this))">
+                        
+                        <input type="file" name="zdjecie" <?php if(isset($_POST['zdjecie'])) echo $_POST['zdjecie']; else echo $result['zdjecie'];?> class="btn btn-fill" id="zdjecie" onchange="displayImg(this,$(this))">
+                      <!-- Button trigger modal -->
+<div style="margin-left:10em;"><button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Przeglądaj
+</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <?php
+                            echo '<img src="/'.$result["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
+                        ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
                       </div>
                       <div class="col-md-6">
+                      <?php
+                        $zdj=$pdo->query('select * from galeria where id_produktu='.$id);
+                        $pic = $zdj->fetchAll(\PDO::FETCH_ASSOC);
+                        foreach($pic as $rekord){
+                            echo '<img src="/'.$rekord["zdjecie"].'" width="100px" height="auto" />'.'<br><br>';
+                         }
+                         echo'  
                         <label for="zdjecie_dod">Dodatkowe zdjęcia</label>
-                        <input type="file" name="zdjecie_dod[]" multiple <?php if(isset($_POST['zdjecie'])) echo $_POST['zdjecie']  ?> class="btn btn-fill" id="zdjecie_dod" onchange="displayImg(this,$(this))">
-                      </div>
+                        <input type="file" name="zdjecie_dod[]" multiple';?> <?php if(empty($_POST['zdjecie'])) echo ""; elseif(isset($_POST['zdjecie'])){ echo $_POST['zdjecie'];} else echo $rekord['zdjecie']; ?> <?php echo 'class="btn btn-fill" id="zdjecie_dod" onchange="displayImg(this,$(this))">
+                      </div> 
+                      
+                      
+                      ';
+
+                      $zdj->closeCursor();
+                        ?>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="opis">Opis</label>
-                        <textarea rows="4" cols="80" id="opis" required name="opis" class="form-control"><?php if(isset($_POST['opis'])) echo $_POST['opis']?></textarea>
+                        <textarea rows="4" cols="80" id="opis" required name="opis" class="form-control"><?php if(isset($_POST['opis'])) echo $_POST['opis']; else echo $result['opis'];?></textarea>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="cena">Cena</label>
-                        <input type="text" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena'] ?>" required class="form-control" >
+                        <input type="text" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena']; else echo $result['cena']; ?>" required class="form-control" >
                       </div>
                     </div>
               </div>
@@ -105,7 +148,7 @@ $kat->closeCursor();
                 
               </div>
               <div class="card-footer">
-                  <button type="submit" id="dodaj" name="dodaj" required class="btn btn-fill btn-primary">Save Product</button>
+                  <button type="submit" id="zapisz" name="zapisz" required class="btn btn-fill btn-primary">Save Product</button>
               </div>
             </div>
           </div>
@@ -147,9 +190,8 @@ $("#kategoria").html(result);
             return $randstring;
         }
     
-        
 
-    if(isset($_POST['dodaj']) && $_FILES['zdjecie']){
+    if(isset($_POST['zapisz']) && $_FILES['zdjecie']){
 
       $picture_name=$_FILES['zdjecie']['name'];
       $picture_type=$_FILES['zdjecie']['type'];

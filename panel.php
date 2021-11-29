@@ -21,8 +21,7 @@ include 'navbar_admin.php';
       
   <div class="list-group">
   <a href="panel.php?page=produkty" class="list-group-item list-group-item-action">Produkty</a>
-  <a href="panel.php?page=galeria" class="list-group-item list-group-item-action">Galeria</a>
-  <a href="#" class="list-group-item list-group-item-action">Kategorie</a>
+  <a href="panel.php?page=kategorie" class="list-group-item list-group-item-action">Kategorie</a>
   <a href="#" class="list-group-item list-group-item-action">Zamówienia</a>
   <a href="#" class="list-group-item list-group-item-action">Użytkownicy</a>
 </div>

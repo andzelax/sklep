@@ -39,7 +39,7 @@ require_once("database.php");
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="cena">Cena</label>
-                        <input type="text" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena'] ?>" required class="form-control" >
+                        <input min="0" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena'] ?>" required class="form-control" >
                       </div>
                     </div>
               </div>

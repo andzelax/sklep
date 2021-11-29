@@ -1,5 +1,19 @@
 <?php
 require_once 'database.php';
+if(isset($_POST['usun_zdj'])){
+    $id_zdj=$_POST['usun_zdj'];
+    $quer=$pdo->query('select * from galeria where id_zdj ='.$id_zdj);
+$file_zdj = $quer->fetch();
+$file_path_zdj =  $file_zdj['zdjecie'];
+ if(unlink($file_path_zdj))
+ {
+$stmt_zdj = $pdo->prepare('DELETE FROM galeria WHERE id_zdj='.$id_zdj);
+$stmt_zdj->execute();
+ }
+
+$pdo=null;
+echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=edit_product&id_prod='.$file_zdj['id_produktu'].'">';
+}
 if(isset($_POST['delete'])){
     $id=$_POST['delete'];
 
@@ -26,4 +40,5 @@ $stmt->execute();
 $pdo=null;
 echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=produkty">';
 }
+
 ?>

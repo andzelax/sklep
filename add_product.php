@@ -146,8 +146,7 @@ $("#kategoria").html(result);
             }
             return $randstring;
         }
-    
-        
+
 
     if(isset($_POST['dodaj']) && $_FILES['zdjecie']){
 
@@ -170,7 +169,7 @@ $("#kategoria").html(result);
         
       $id=$_POST['dodaj'];
      $nazwa = $_POST['nazwa'];
-     $opis = $_POST['opis'];
+     $opis =  nl2br($_POST['opis']);
       $cena = $_POST['cena'];
       $id_kat = $_POST['kategoria'];
       $zdjecie = $nazwa_zdj;                      

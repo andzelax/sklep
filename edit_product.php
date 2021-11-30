@@ -131,7 +131,7 @@ $result = $stmt->fetch();
                       <label for="id_nadrz" class="form-label">Kategoria główna: </label>
                         <select id="id_nadrz" name="id_nadrz" class="form-select">
                                             <?php
-
+                    
                     $kat=$pdo->query ('select * from kategorie where id_nadrz is null');
                        foreach($kat as $rekord)
                        {
@@ -149,14 +149,24 @@ $kat->closeCursor();
                         <label for="kategoria" class="form-label">Kategoria podrzędna: </label>
         <select name="kategoria" id="kategoria" class="form-select" >
         <?php
+        $aktualny = $result['kategoria'];
  $nad=$pdo->query ('select * from kategorie where id_nadrz is null');
- foreach($nad as $row)
+ foreach($nad as $rekord)
  {
-$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$row['id_kat']);
-   foreach($kat as $rekord)
+$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$rekord['id_kat']);
+   foreach($kat as $row)
    {
-     echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
-                      
+    if(isset($_POST['zapisz'])){
+      if ($row['id_kat'] == $_POST['kategoria']){
+          echo '<option selected="selected" value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';
+       } else{
+          echo '<option value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';}
+  }else
+  {
+      if ($row['id_kat'] == $aktualny) {echo '<option selected="selected" value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';
+      }else{
+          echo '<option value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';}
+  }      
    }
 
 $kat->closeCursor();
@@ -240,7 +250,7 @@ $("#kategoria").html(result);
        }  
       $id=$_POST['zapisz'];
      $nazwa = $_POST['nazwa'];
-     $opis = $_POST['opis'];
+     $opis =  nl2br($_POST['opis']);
       $cena = $_POST['cena'];
       $id_kat = $_POST['kategoria'];                     
      $stmt = $pdo->prepare("UPDATE produkty set nazwa=?, opis=?, cena=?,kategoria=? where id_prod=".$id);

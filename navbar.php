@@ -1,3 +1,6 @@
+<?php
+require_once 'database.php';
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -26,12 +29,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="kobiety.html">Kobieta</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="mezczyzni.html">Mężczyzna</a>
-                </li>
+                
+                <?php
+                  $kategorie=$pdo->query('select * from kategorie where id_nadrz is null');
+                  $kat=$kategorie->fetchAll();
+                  foreach($kat as $cat){
+                    echo'<form method="POST"><li class="nav-item">';
+                    echo '<a class="nav-link" name="category" href="wyswietlane_produkty.php?id_kat='.$cat['id_kat'].'"">'.$cat['kategoria'].'</a>';
+                    echo '</li></form>';
+                  }
+                ?>
                 <li class="nav-item">
                   <a class="nav-link" href="kontakt.html">Kontakt</a>
                 </li>

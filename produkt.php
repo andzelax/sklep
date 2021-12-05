@@ -5,6 +5,9 @@ $id = $_GET['product'];
 $stmt = $pdo->prepare("SELECT * from produkty WHERE id_prod=" . $id);
 $stmt->execute();
 $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+$rozmiar = $pdo->prepare('select * from rozmiary where id_prod='. $id);
+$rozmiar->execute();
+$rozm=$rozmiar->fetchAll(\PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="en">
@@ -65,18 +68,20 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                   <div class="row">
                     <label class="text-center">Wybierz rozmiar</label>
                     </div>
+                    <form method="POST" action="dodawanie_do_koszyka.php">
                     <div class="d-grid gap-1 d-flex justify-content-center">
-                    <button type="button" class="btn-light rounded-circle"  role="checkbox" aria-checked="true">XS</button>
-                    <button type="button" class="btn-light rounded-circle" role="checkbox" aria-checked="false">S</button>
-                    <button type="button" class="btn-light rounded-circle" role="checkbox" aria-checked="false">M</button>
-                    <button type="button" class="btn-light rounded-circle" role="checkbox" aria-checked="false">L</button>
-                    <button type="button" class="btn-light rounded-circle" role="checkbox" aria-checked="false">XL</button>
-                  </div>
-
+                        <input type="hidden" name="rozmiar" value="" id="rozmiar" disabled>
+                        <?php
+                        foreach($rozm as $row){
+                        echo'
+                    <button name="rozmiar" onclick=wybierzRozmiar('. $row['id_rozmiar'] .') type="button" class="btn-light rounded-circle"  role="checkbox">'. $row['rozmiar'].'</button>
+                  ';}
+                  ?></div>
                   <div class="d-grid d-flex justify-content-center" >
-                  <button type="button" class="btn btn-dark">Dodaj do koszyka</button>
-                  </div>
 
+                  <button type="submit" class="btn btn-dark">Dodaj do koszyka</button>
+                  </div>
+                 </form>
                   <p class="mb-3">
                       Opis <br/><br/>
                   <?php
@@ -117,6 +122,13 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             },
         });
     });
+
+    function wybierzRozmiar(id){
+        let input = document.getElementById('rozmiar');
+        input.value = id;
+        input.disabled = false;
+        console.log(input.value);
+    }
 </script>
 </body>
 </html>

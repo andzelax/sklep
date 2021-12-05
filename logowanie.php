@@ -18,7 +18,36 @@ include 'navbar.php';
 
     <title>QUALITY</title>
   </head>
-  <body>
+  <body> 
+<?php
+if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
+                
+  $stmt = $pdo->prepare('SELECT * FROM uzytkownicy WHERE email = :email');
+  
+  $stmt->bindValue(':email',$_POST['email']);
+  $stmt->execute();
+
+
+  if($stmt->rowCount() == 0){
+    echo 'Nie ma takiego uzytkownika';
+  }
+  else{
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if(password_verify($_POST['passw'], $user['haslo'])){
+      $_SESSION['user']=$_POST['email'];
+  echo '<meta http-equiv="refresh" content="1;url=./index.php">';
+    }else{
+      echo 'haslo zle >:(';
+    }
+    
+  }
+  
+    //
+  
+  
+}
+?>
+
 <main>
         <div id="container" style="overflow: hidden;" >
             <div class="row" style="padding-left: 25px;">
@@ -28,7 +57,7 @@ include 'navbar.php';
                   <div class="col-lg-12">
                     <?php if(empty($_SESSION['user'])) {
                     echo'
-                    <form method="POST" action="zalogowanie.php">
+                    <form method="POST" action="logowanie.php">
                     <div class="form card card-body mb-2 "  >
               <div class="row">
                 <div class="row">

@@ -23,7 +23,7 @@ include 'navbar_admin.php';
   <a href="panel.php?page=produkty" class="list-group-item list-group-item-action">Produkty</a>
   <a href="panel.php?page=kategorie" class="list-group-item list-group-item-action">Kategorie</a>
   <a href="panel.php?page=rozmiary" class="list-group-item list-group-item-action">Rozmiary</a>
-  <a href="#" class="list-group-item list-group-item-action">Zamówienia</a>
+  <a href="panel.php?page=zamowienia" class="list-group-item list-group-item-action">Zamówienia</a>
   <a href="#" class="list-group-item list-group-item-action">Użytkownicy</a>
   
 </div>

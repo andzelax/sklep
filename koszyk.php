@@ -26,12 +26,8 @@ session_start();
                 <?php if(!isset($_SESSION['koszyk'])) {
                     echo 'produktów nie ma >:(';
                 }else{
+                  $total=0;
                     ?>
-                    <pre>
-                        <?php
-                        print_r($_SESSION['koszyk']);
-                        ?>
-                    </pre>
                 <?php foreach ($_SESSION['koszyk'] as $id => $produkt): ?>
                 <div class="col-lg-8" style="padding-left: 40px;">
                     <div class="form card card-body  form-floating"  >
@@ -46,65 +42,56 @@ session_start();
                 </svg>
               </button>
             </div>   </form>
-                  <div class="col-lg-4" style="padding-left: 10px;">
-                      <a href="k_kurtka_a.html">
+                  <div class="col-lg-4" style="padding-left: 10px;"><?php echo'
+                      <a href="produkt.php?product= '. $id.'">
                         <div class="row">
-                        <img src="<?= $produkt['zdjecie'] ?>" alt="...">
+                        <img src="'.$produkt['zdjecie'] .'" alt="..." >
                       </div>
-                    </a>
+                    </a>';?>
                   </div>
                   <div class="col-lg-7">
                     <div class="row">
-                    <p>Marynarka ze sztucznej skóry<br><br>149,99 PLN</p>
+                    <p><?php
+                                echo $produkt['nazwa'];
+                            ?><br><br><?php
+                            echo $produkt['cena'];
+                        ?> PLN</p>
                     <div class="col">
                       <div class="row" style="padding-left: 15px;">
+                      <div class="col-sm-4">
                       <table>
-                        <tr>
-                          <td>
-                            Nr. produktu
-                          </td>
-                          <td>
-                            a
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Kolor
-                          </td>
-                          <td>
-                            Czarny
-                          </td>
-                        </tr>
-                        <tr>
                             <td>
                               Rozmiar
                             </td>
                             <td>
                             <?php
-                                echo $produkt['rozmiar'];
+                                echo ': '.$produkt['rozmiar'];
                             ?>
+                            </td>
                         </tr>
                         <tr>
                           <td>
-                            Suma
+                            Cena:
                           </td>
                           <td>
                             <?php
-                                echo $produkt['cena'] * $produkt['ilosc'];
+                                echo $produkt['cena'];
                             ?>
                           </td>
                         </tr>
                         <tr >
                           <td >
-                            Ilość
+                            Ilość:
                           </td>
                           <td>
-                            <form class="col-sm-3 d-flex" >
-                              <input type="number" value="1" class="form-control me-2 bg-light btn-dark" style="color: black;" id="count" >
+                            <form class="d-flex" >
+                              <input type="number" min="1" value="<?= $produkt['ilosc'] ?>" name="ilosc" class="form-control bg-light btn-dark" style="color: black;" id="count" >
+                              
                             </form>
                           </td>
                         </tr>
                       </table>
+                    </div>
                     </div>
                     </div>
                     </div>
@@ -113,12 +100,10 @@ session_start();
                     </div>
                   </div>
                 </div>
-                <?php endforeach; ?>
-                <?php
-                }
-                ?>
-                                
-                                <div class="col-lg-4 align-self-center" style=" padding-left: 40px;">
+                <?php 
+              $total += $produkt['ilosc']*$produkt['cena'];
+              endforeach; ?>
+              <div class="col-lg-4 align-self-center" style=" padding-left: 40px;">
                     <div class="form card card-body form-floating" >
                       <div class="row">
                         <div class="col"><h6 class="text-center">Podsumowanie</h6></div>
@@ -141,7 +126,9 @@ session_start();
                               Wartość zamówienia
                             </th>
                             <td style="float:right">
-                              149,99 PLN
+                             <?php
+
+                             ?>
                             </td>
                           </tr>
                           <tr>
@@ -157,20 +144,23 @@ session_start();
                                 Suma
                               </th>
                               <td style="float:right">
-                                158,98 PLN
+                                <?= number_format($total, 2, ',') ?> PLN
                               </td>
                             </tr>
                         </table>
                       </div>
                       <div class="row">
                         
-                        <a href="zamowienie.html" class="btn btn-dark ">
+                        <a href="formularz.php" class="btn btn-dark ">
                           Złóż zamówienie
                         </a>
                       </div>
                     </div>
                     
             </div>
+                <?php
+                }
+                ?>
                 </div> 
               </div>
             </div>

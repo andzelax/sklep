@@ -19,8 +19,9 @@ $_SESSION['koszyk'][$id] = [
     'nazwa' => $name,
     'cena' => $price,
     'zdjecie' => $zdjecie,
-    'rozmiar' => $rozmiar
+    'rozmiar' => $rozmiar,
+    'ilosc' => 1
 ];
-echo '<meta http-equiv="refresh" content="1;url=./index.php">';
+echo '<meta http-equiv="refresh" content="1;url=./koszyk.php">';
 }
 ?>

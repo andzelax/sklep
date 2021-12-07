@@ -1,24 +1,25 @@
 <?php
 require_once("database.php");
+
 ?>
       <div class="content">
         <div class="container-fluid">
-          <form action="add_category.php" method="post" id="manage-prod" enctype="multipart/form-data">
+          <form action="" method="post" id="manage-prod" enctype="multipart/form-data">
           <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-5">
             <div class="card">
               <div class="card-header card-header-primary">
-                <h5 class="title">Rozmiary</h5>
+                <h5 class="title">Kategoria</h5>
               </div>
               <div class="card-body">
                 
                   <div class="row">
                     
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       
                       <div class="form-group">
-                      <label for="nadrz" class="form-label">Produkt: </label>
-                        <select id="nadrz" name="nadrz" class="form-select">
+                      <label for="id_nadrz" class="form-label">Kategoria główna: </label>
+                        <select id="id_nadrz" name="id_nadrz" class="form-select">
                                             <?php
 
                     $kat=$pdo->query ('select * from kategorie where id_nadrz is null');
@@ -33,11 +34,26 @@ $kat->closeCursor();
    </select> 
 </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       <div class="form-group">
                         <label for="kategoria" class="form-label">Kategoria podrzędna: </label>
-                        <input type="text" id="kategoria" name="kategoria" class="form-control" value="<?php if(isset($_POST['kategoria'])) echo $_POST['kategoria']   ?>">
+        <select name="kategoria" id="kategoria" class="form-select" >
+        <?php
+ $nad=$pdo->query ('select * from kategorie where id_nadrz is null');
+ foreach($nad as $row)
+ {
+$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$row['id_kat']);
+   foreach($kat as $rekord)
+   {
+     echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
+                      
+   }
 
+$kat->closeCursor();
+  }
+  $nad->closeCursor();
+?>
+        </select>
                       </div>
                     </div>
                      
@@ -47,36 +63,131 @@ $kat->closeCursor();
                 
               </div>
               <div class="card-footer">
-                  <button type="submit" id="dodaj" name="dodaj" required class="btn btn-fill btn-primary">Save Product</button>
+                <form action="add_size.php" method="POST">
+              <button name="submit" class="btn btn-primary" type="submit" value=<?php $rekord['id_kat'] ?> >Szukaj</button>
+        </form>
               </div>
             </div>
           </div>
+          <div class="col-md-5">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h5 class="title">Produkty</h5>
+              </div>
+              <div class="card-body">
+                
+                  <div class="row">
+                    
+                    <div class="col-md-12">
+                      
+                    <table class="table table-striped " id="prod">
+                    <thead class="produkty">
+                      <tr>
+                        <th>Zdjęcie</th>
+                        <th>Nazwa</th>
+                        <th>Akcje</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                        if(isset($_POST['submit'])){
+                        
+                        $stmt=$pdo->query('SELECT * from produkty where kategoria ='.$_POST['kategoria']);
+                        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                        foreach($result as $rekord)
+                        {
+                            print("<tr><td>");
+                           echo '<img src="/'.$rekord['zdjecie'].'" width="100px" height="auto" />'.'<br><br>';
+                           print("</td><td>");
+                           echo $rekord['nazwa'];
+                           print('<td>
+          <div class="btn-group">         
+<form action="#" method="POST">
+        <button name="dodaj" type="submit" value='.$rekord['id_prod'].' class="btn btn-primary">Dodaj</button>
+        </form></div>
+        </td>');
+                          
+                        } $stmt->closeCursor();
+                      }else echo'';
+                        ?>
+                    </tbody>
+                  </table>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <?php
+            if(isset($_POST['dodaj'])){
+              $id_prod = $_POST['dodaj'];
+              echo'
+              <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary">
+                <h5 class="title">Rozmiary</h5>
+              </div>
+              <div class="card-body">
+                
+                  <div class="row">
+                    
+                    <div class="col-md-6">
+                        <label for="rozmiar">Rozmiar</label>
+                        <select name="rozmiar" class="form-select" >
+                         <option selected value="XS">XS</option>
+                         <option value="S">S</option>
+                          <option value="M">M</option>
+                           <option value="L">L</option>
+                           <option value="XL">XL</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="ilosc">Ilość</label>
+                        <input type="number" min="0" name="ilosc" class="form-control" value=';if(isset($_POST['ilosc'])){echo $_POST['ilosc'];} echo'>
+                      </div>
+                      </div>
+            </div>
+            <div class="card-footer">
+                  <button type="submit" name="dodaj_rozmiar" value='.$id_prod.' required class="btn btn-fill btn-primary">Dodaj rozmiar</button>
+              </div>
+          </div>
+              ';
+            }
+            if(isset($_POST['dodaj_rozmiar'])){
+              $id = $_POST['dodaj_rozmiar'];
+              $rozmiar = $_POST['rozmiar'];
+              $ilosc = $_POST['ilosc'];
+              $stmt = $pdo->prepare("INSERT into rozmiary (rozmiar, ilosc, id_prod) VALUES (?, ?, ?)");
+              $stmt->execute([$rozmiar,$ilosc,$id]);
+              $pdo=null;
+     echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=add_size">';
+            }
+          ?>
+
          </form>
-          
         </div>
       </div>
-
      <script>
          
-
+$(document).ready(function() {
+$('#id_nadrz').on('change', function() {
+var category_id = this.value;
+$.ajax({
+url: "kat_podrz_action.php",
+type: "POST",
+data: {
+    category_id: category_id
+},
+cache: false,
+success: function(result){
+$("#kategoria").html(result);
+}
+});
+});
+});
 
      </script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <?php
  
-        if(isset($_POST['submit'])){
-     $kategoria = $_POST['id_nadrz'];   
-     $stmt = $pdo->prepare("INSERT into kategorie (kategoria) VALUES (?)");
-     $stmt->execute([$kategoria]); 
-     
-     echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=kategorie">';
-        }
-        if(isset($_POST['dodaj'])){
-          $glowna=$_POST['nadrz'];
-          $kategoria = $_POST['kategoria'];   
-          $stmt = $pdo->prepare("INSERT into kategorie (kategoria,id_nadrz) VALUES (?,?)");
-          $stmt->execute([$kategoria,$glowna]); 
-          $pdo=null; 
-          echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=kategorie">';
-             }
+      
     ?>
  

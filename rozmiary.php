@@ -32,6 +32,7 @@ $stmt=$pdo->query('SELECT * from rozmiary LIMIT ' . $fron . ', ' . $limit);
                         <th>Produkt</th>
                         <th>Rozmiar</th>
                         <th>Ilość</th>
+                        <th>Akcje</th>
                     </thead>
                     <tbody>
                       <?php 
@@ -46,14 +47,16 @@ $stmt=$pdo->query('SELECT * from rozmiary LIMIT ' . $fron . ', ' . $limit);
                                     print($cat['nazwa']);
                                 }
                                 $kat->closeCursor();
-                            }else{
-                            echo $rekord['rozmiar'];}
+                            }
+                            print("</td><td>");
+                            echo $rekord['rozmiar'];
                            print("</td><td>");
                            echo $rekord['ilosc'];
+                           
                            print('<td>
           <div class="btn-group">
                       
-<form action="delete_category.php" method="POST" onsubmit="return confirm(\'Czy na pewno chcesz usunąć '.$rekord['rozmiar'].'?\');">
+<form action="delete_size.php" method="POST" onsubmit="return confirm(\'Czy na pewno chcesz usunąć '.$rekord['rozmiar'].'?\');">
         <button name="delete" type="submit" value='.$rekord['id_rozmiar'].' class="btn btn-danger">Usuń</button>
         </form></div>
         </td>');

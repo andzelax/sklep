@@ -6,11 +6,6 @@ $stmt = $pdo->prepare("SELECT * from kategorie WHERE id_nadrz=" . $id);
 $stmt->execute();
 $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 ?>
-<pre>
-  <?php
-  print_r($_GET);
-  ?>
-</pre>
 <!doctype html>
 <html lang="en">
   <head>
@@ -49,6 +44,7 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
               <div class="col-lg-9 col-md-12 tab-content" id="v-pills-tabContent">
                   <div class="tab-pane fade show active" id="v-pills-kurtki" role="tabpanel">
                     <?php
+                    if(isset($_GET['page'])){
                     $k=$_GET['page'];
                     echo'<div class="row">';
                     $produkt=$pdo->query('select * from produkty where kategoria='.$k);
@@ -60,7 +56,28 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                       echo'</figure></div>';
                     }
                     echo'</div>';
-                    $produkt->closeCursor();
+                    $produkt->closeCursor();}
+                    else
+                    {
+                      $all = [];
+                      foreach($result as $res){
+                    $wszystkie=$pdo->query('select * from produkty where kategoria='.$res['id_kat']);
+                    $wszys=$wszystkie->fetchAll();
+                    $all = array_merge($all, $wszys);
+                      }
+                    echo'<div class="row">';
+                    foreach($all as $roww){
+                      echo'<div class="col-lg-4"><figure class="figure">';
+                      echo'<a href="produkt.php?product='.$roww['id_prod'].'" ><img src="'.$roww['zdjecie'].'" class="d-block w-100 figure-img img-fluid rounded" alt="..."></a>';
+                      echo'<figcaption class="figure-caption text-center">A caption for the above image.</figcaption>';
+                      echo'</figure></div>';
+                    }
+                    echo'</div>';
+                    $wszystkie->closeCursor();
+                    
+
+                    
+                  }
                     $stmt->closeCursor();
                    
                   ?>

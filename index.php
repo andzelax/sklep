@@ -16,47 +16,8 @@ include 'navbar.php';
     <link rel="stylesheet" href="css/mdb.min.css" />
     <title>QUALITY</title>
   </head>
-  <body>  
-  
-  <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="index.html"><img src="img/logo1.png" width="120" height="30" class="d-inline-block mr-1 align-bottom" alt="QUALITY"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="kobiety.html">Kobieta</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="mezczyzni.html">Mężczyzna</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="kontakt.html">Kontakt</a>
-                </li>
-              </ul>
-            <a href="logowanie.html" class="me-2">
-              <svg class="me-2 bi bi-person-fill" style="color: white;" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-              </svg>
-            </a>
-            <a href="koszyk.html" class="me-2">
-                <svg class="me-2 bi bi-bag-fill" style="color: white;" xmlns="http://www.w3.org/2000/svg"  width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"/>
-                </svg>
-            </a>         
-              <form class="d-flex me-2 align-self-center" style="padding-top: 3px;">
-                <input class=" btn-light form-control me-2 "  type="search" placeholder="Wyszukaj" aria-label="Wyszukaj">
-                <button class="btn btn-light"  type="submit">Znajdź</button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-        
+  <body>    
+ 
         <div id="container" style="overflow: hidden;" >
             <div class="row">
               <div class="slider" id="slider3">
@@ -65,7 +26,7 @@ include 'navbar.php';
                     <a href="kobiety.html">Kobiety</a>
                   </span></h2>
                 </div>
-                <div style="background-image:url(img/zdj10.jpg)">
+                <div style="background-image:url(img/slider.png">
                     <h2><span>
                       <a href="mezczyzni.html">Mężczyźni</a>
                     </span></h2>
@@ -126,21 +87,14 @@ include 'navbar.php';
                             <div class="card-img-overlay ">
                             </div>
                             </a>
-                        </div>
-                        <div class="col-md card">
-                          <a href="#" target="blank">
-                            <img src="img/zdj11.jpg" class="d-block w-100" alt="...">
-                            <div class="card-img-overlay ">
-                            </div>
-                            </a>
-                        </div>
+                        </div>                       
                     </div>
                   </div>
                 </article></div>  
                 </div>
             </div>
             </div>
-        </div>         
+        </div><BR><BR><BR><BR>
   <footer>
 <?php include 'footer.php';?>
 </footer>

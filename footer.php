@@ -105,11 +105,11 @@
                   </a>
                     </div>
                     </div>
-                </div>
+                </div><hr style="color:#FFFFFF">
                 <div class="card-footer">
-                  Copyright
+                  Copyright © 2021 QUALITY <br>
                 </div>
-                
+                <BR>
               </div>
               </footer>
               </body>

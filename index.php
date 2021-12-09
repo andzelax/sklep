@@ -31,7 +31,7 @@ include 'navbar.php';
                     <a href="kobiety.html">Kobiety</a>
                   </span></h2>
                 </div>
-                <div style="background-image:url(img/zdj10.jpg)">
+                <div style="background-image:url(img/slider.png">
                     <h2><span>
                       <a href="mezczyzni.html">Mężczyźni</a>
                     </span></h2>
@@ -92,21 +92,14 @@ include 'navbar.php';
                             <div class="card-img-overlay ">
                             </div>
                             </a>
-                        </div>
-                        <div class="col-md card">
-                          <a href="#" target="blank">
-                            <img src="img/zdj11.jpg" class="d-block w-100" alt="...">
-                            <div class="card-img-overlay ">
-                            </div>
-                            </a>
-                        </div>
+                        </div>                       
                     </div>
                   </div>
                 </article></div>  
                 </div>
             </div>
             </div>
-        </div>         
+        </div><BR><BR><BR><BR>
   <footer>
 <?php include 'footer.php';?>
 </footer>

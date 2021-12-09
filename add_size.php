@@ -156,8 +156,16 @@ $kat->closeCursor();
               $id = $_POST['dodaj_rozmiar'];
               $rozmiar = $_POST['rozmiar'];
               $ilosc = $_POST['ilosc'];
-              $stmt = $pdo->prepare("INSERT into rozmiary (rozmiar, ilosc, id_prod) VALUES (?, ?, ?)");
-              $stmt->execute([$rozmiar,$ilosc,$id]);
+              $select = $pdo->query('select * from rozmiary where id_prod='.$id.' and rozmiar="'.$rozmiar.'"');
+              $selectt = $select->fetch();
+              if (isset($selectt['id_rozmiar'])){
+                $iloscc = $selectt['ilosc'] + $ilosc;
+                $up=$pdo->query('update rozmiary set ilosc='.$iloscc.' where id_rozmiar='.$selectt['id_rozmiar']);
+              }else{
+                $stmt = $pdo->prepare("INSERT into rozmiary (rozmiar, ilosc, id_prod) VALUES (?, ?, ?)");
+                $stmt->execute([$rozmiar,$ilosc,$id]);
+              }
+              
               $pdo=null;
      echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=add_size">';
             }

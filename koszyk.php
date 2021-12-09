@@ -1,7 +1,6 @@
 <?php
 require_once 'database.php';
 include 'navbar.php';
-session_start();
 ?>
 <!doctype html>
 <html lang="en">
@@ -20,6 +19,7 @@ session_start();
   <body>
 <main>
 <div id="container" style="overflow: hidden;" >
+
             <div class="row">
               <div class="row d-flex justify-content-center">
                 <div class="row">
@@ -84,9 +84,10 @@ session_start();
                             Ilość:
                           </td>
                           <td>
-                            <form class="d-flex" >
+                            <form  action="usuwanie_z_koszyka.php" method="post">
                               <input type="number" min="1" value="<?= $produkt['ilosc'] ?>" name="ilosc" class="form-control bg-light btn-dark" style="color: black;" id="count" >
-                              
+                               
+                              <button type="submit" name="zapisz" value="<?php echo $id; ?>" class="btn btn-dark mt-2">Zapisz</button>
                             </form>
                           </td>
                         </tr>

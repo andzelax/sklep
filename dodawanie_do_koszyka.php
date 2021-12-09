@@ -11,7 +11,6 @@ $rozmiar = $resultt['rozmiar'];
 $stmt = $pdo->prepare("SELECT * FROM produkty WHERE id_prod =" . $id_prod);
 $stmt->execute();
 $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-$id = $result['id_prod'];
 $name = $result['nazwa'];
 $price = $result['cena'];
 $zdjecie = $result['zdjecie'];

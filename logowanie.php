@@ -1,8 +1,6 @@
 <?php
 require_once 'database.php';
 include 'navbar.php';
-//error_reporting(E_ALL ^ E_NOTICE);
-    session_start();
 
 ?>
 <!doctype html>
@@ -35,6 +33,7 @@ if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(password_verify($_POST['passw'], $user['haslo'])){
       $_SESSION['user']=$_POST['email'];
+      $_SESSION['admin']=$user['rola'];
   echo '<meta http-equiv="refresh" content="1;url=./index.php">';
     }else{
       echo 'haslo zle >:(';

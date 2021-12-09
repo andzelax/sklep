@@ -18,13 +18,18 @@ $stmt=$pdo->query('SELECT * from zamowienia LIMIT ' . $fron . ', ' . $limit);
 <body>
       <div class="content">
         <div class="container-fluid">
+        <?php 
+            if (isset($_SESSION['error'])):
+          ?>
+          <div class="alert alert-danger">
+              <?= $_SESSION['error'] ?>
+          </div>
+          <?php endif;
+          unset($_SESSION['error']);
+          ?>
         
          <div class="col-md-14">
             
-                <div class="col-md-2 offset-md-10"> <a class="btn btn-dark" href="panel.php?page=add_order" name="add_order" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-</svg> Dodaj</a></div> 
                 <br>
                   <table class="table table-striped " id="prod">
                     <thead class="zamowienia">
@@ -67,7 +72,7 @@ $stmt=$pdo->query('SELECT * from zamowienia LIMIT ' . $fron . ', ' . $limit);
                            echo $rekord['data_realizacji'];
                            print('<td>
           <div class="btn-group">
-          <button type="button" name="edit" class="btn btn-warning"><a href="panel.php?page=edit_order&id_prod='.$rekord['id_zamowienia'].'"">edytuj</a></button>
+          <button type="button" name="edit" class="btn btn-warning"><a href="panel.php?page=edit_order&id_zamowienia='.$rekord['id_zamowienia'].'"">edytuj</a></button>
                         
 <form action="delete_order.php" method="POST" onsubmit="return confirm(\'Czy na pewno chcesz usunąć '.$rekord['suma'].'?\');">
         <button name="delete" type="submit" value='.$rekord['id_zamowienia'].' class="btn btn-danger">Usuń</button>

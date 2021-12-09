@@ -2,7 +2,6 @@
 require_once 'database.php';
 include 'navbar.php';
 
-session_start();
 ?>
 <!doctype html>
 <html lang="en">

@@ -1,0 +1,12 @@
+{
+    "name": "domin/htdocs",
+    "authors": [
+        {
+            "name": "Andżelika Gawinkowska",
+            "email": "an_gaw@spoko.pl"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.5"
+    }
+}

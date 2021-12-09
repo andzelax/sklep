@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['admin']) || $_SESSION['admin'] == 0){
+  echo 'Proszę nie oszukiwać ogólnie';
+  exit;
+}
+session_abort();
 require_once 'database.php';
 include 'navbar_admin.php';
 ?>

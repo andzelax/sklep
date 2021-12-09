@@ -1,6 +1,7 @@
 <?php
 require_once 'database.php';
 session_start();
+$total=0;
 if(isset($_POST['zamow'])){
     $imie = $_POST['imie'];
     $nazwisko = $_POST['nazwisko'];
@@ -32,18 +33,21 @@ if(isset($_POST['zamow'])){
         foreach($_SESSION['koszyk'] as $id => $produkt){
             $cena = $produkt['cena'];
             $ilosc=$produkt['ilosc'];
+            $total += $produkt['ilosc']*$produkt['cena'];
             $zdjecie=$produkt['zdjecie'];
             $nazwa=$produkt['nazwa'];
             $rozmiar=$produkt['rozmiar'];
-            $roz=$pdo->query('select id_rozmiar from rozmiary where rozmiar="'.$rozmiar.'" and id_prod='.$id);
-            $rozm=$roz->fetch();
-            $wynik = $rozm['id_rozmiar'];
+            // $roz=$pdo->query('select id_rozmiar from rozmiary where rozmiar="'.$rozmiar.'" and id_prod='.$id);
+            // $rozm=$roz->fetch();
+            // $wynik = $rozm['id_rozmiar'];
             $wprowadz=$pdo->prepare('insert into zamowione_produkty (id_rozmiaru,id_zamowienia,cena,ilosc,zdjecie,nazwa) values(?,?,?,?,?,?)');
-            $wprowadz->execute([$wynik,$id_zam,$cena,$ilosc,$zdjecie,$nazwa]);
+            $wprowadz->execute([$id,$id_zam,$cena,$ilosc,$zdjecie,$nazwa]);
         }
+        $update=$pdo->prepare('update zamowienia set suma = '.$total.' where id_zamowienia = '.$id_zam);
+        $update->execute();
+        $_SESSION['koszyk']=null;
     }
 
-    echo 'git';
 }
 
 ?>

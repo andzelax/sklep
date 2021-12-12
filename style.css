@@ -131,12 +131,26 @@
     width: 100%;
 }
 
-
-
 html {
     height: 100%;
     box-sizing: border-box;
 }
 *, *:before, *:after {
     box-sizing: inherit;
+}
+div.dod {
+    background-color:#202124;
+    padding-left:90px;
+}
+h3.doda {
+    color:white;
+}
+h5.doda {
+    color:white;
+}
+h1.tyt {
+    font-family: 'Bakbak One', cursive;
+}
+p.tyt {
+    font-family: 'Bakbak One', cursive;
 }

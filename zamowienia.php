@@ -39,7 +39,6 @@ $stmt=$pdo->query('SELECT * from zamowienia LIMIT ' . $fron . ', ' . $limit);
                         <th >Nazwisko</th>
                         <th>Email</th>
                         <th>Nr_telefonu</th>
-                        <th>Płatnosć</th>
                         <th>Suma</th>
                         <th>Data zamowienia</th>
                         <th>Data realizacji</th>
@@ -62,8 +61,6 @@ $stmt=$pdo->query('SELECT * from zamowienia LIMIT ' . $fron . ', ' . $limit);
                            echo $rekord['email'];
                            print("</td><td>");
                            echo $rekord['nr_telefonu'];
-                           print("</td><td>");
-                           echo $rekord['id_platnosci'];
                            print("</td><td>");
                            echo $rekord['suma'];
                            print("</td><td>");

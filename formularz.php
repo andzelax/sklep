@@ -26,27 +26,21 @@ include 'navbar.php';
                 <div class="col-lg-12 d-flex justify-content-center">
                   <div class="col-md-4">
                     <div class="row mb-3 ">
-                      <input type="text" class="btn-dark bg-white form-control" name="imie">
+                      <input required type="text" class="btn-dark bg-white form-control" name="imie">
                       <label class="mb-3" >Imię</label>
-                      <input type="text" class="btn-dark bg-white form-control" name="nazwisko">
+                      <input required type="text" class="btn-dark bg-white form-control" name="nazwisko">
                       <label class="mb-3" >Nazwisko</label>
-                      <input type="text" class="btn-dark bg-white form-control" name="miasto">
+                      <input required type="text" class="btn-dark bg-white form-control" name="miasto">
                       <label class="mb-3" >Miasto</label>
-                      <input type="text" class="btn-dark bg-white form-control" name="poczta">
+                      <input required type="text" class="btn-dark bg-white form-control" name="poczta">
                       <label class="mb-3" >Poczta</label>
-                      <input type="text"  class="btn-dark bg-white form-control" name="adres">
+                      <input required type="text"  class="btn-dark bg-white form-control" name="adres">
                       <label class="mb-3" >Adres</label>
-                      <input type="text" pattern="^[0-9\-\+]{9}$" class=" btn-dark bg-white form-control" name="nr_telefonu">
+                      <input required type="text" pattern="^[0-9\-\+]{9}$" class=" btn-dark bg-white form-control" name="nr_telefonu">
                       <label class="mb-3" >Numer telefonu</label>
-                      <input type="email" class="btn-dark bg-white form-control" name="email">
+                      <input required type="email" class="btn-dark bg-white form-control" name="email">
                       <label class="mb-3" >Email</label>
-                      <select class="form-select mb-3 btn-dark bg-white form-control" name="id_platnosci">
-                        <option selected>Płatność przy odbiorze</option>
-                        <option  value="1">Visa</option>
-                        <option value="2">Mastercard</option>
-                        <option value="3">PayU</option>
-                        <option value="4">BLIK</option>
-                      </select>
+                      
                       <div class="col">
                       <button type="submit" name="zamow" class="btn btn-dark">Złóż zamówienie</button>
                       </div>

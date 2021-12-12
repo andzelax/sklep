@@ -11,9 +11,7 @@ if(isset($_POST['zamow'])){
     $nr_telefonu = $_POST['nr_telefonu'];
     $email = $_POST['email'];
 
-    echo'<pre>';
-    print_r($_SESSION['koszyk']);
-    echo'</pre>';
+    
 
     if(isset($_SESSION['user'])){
         $uzyt = $pdo->query('select id_uzytkownika from uzytkownicy where email="'.$_SESSION['user'].'"');
@@ -47,7 +45,8 @@ if(isset($_POST['zamow'])){
         $update->execute();
         $_SESSION['koszyk']=null;
     }
-
+echo'Dziękujemy za zamówienie';
+echo '<meta http-equiv="refresh" content="0;url=./index.php">';
 }
 
 ?>

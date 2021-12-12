@@ -27,16 +27,17 @@ if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
 
 
   if($stmt->rowCount() == 0){
-    echo 'Nie ma takiego uzytkownika';
+    $_SESSION['error'] = 'Nie ma takiego uzytkownika'; 
   }
   else{
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(password_verify($_POST['passw'], $user['haslo'])){
       $_SESSION['user']=$_POST['email'];
       $_SESSION['admin']=$user['rola'];
+      $_SESSION['id_uzytkownika']=$user['id_uzytkownika'];
   echo '<meta http-equiv="refresh" content="1;url=./index.php">';
     }else{
-      echo 'haslo zle >:(';
+      $_SESSION['error'] = 'Złe hasło';
     }
     
   }
@@ -49,6 +50,15 @@ if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
 
 <main>
         <div id="container" style="overflow: hidden;" >
+        <?php 
+            if (isset($_SESSION['error'])):
+          ?>
+          <div class="alert alert-danger">
+              <?= $_SESSION['error'] ?>
+          </div>
+          <?php endif;
+          unset($_SESSION['error']);
+          ?>
             <div class="row" style="padding-left: 25px;">
               <div class="row">
                 <div class="d-flex justify-content-center">
@@ -86,10 +96,14 @@ if(isset($_POST['submit']) && $_POST['email']!='' && $_POST['passw']) {
                     ';
                     
                   }
-                     else {echo' <p>Zalogowano jako '.$_SESSION['user'].'</p>';
-                      echo '<a class="btn btn-dark" href="wylogowanie.php" name="logout" role="button">Wyloguj</a>';
+                     else {
+                      echo' <div class="text-center"><p>Zalogowano jako '.$_SESSION['user'].'</p>';
+                       echo '<a class="btn btn-dark" href="wylogowanie.php" name="logout" role="button">Wyloguj</a><br/><br/>';
                       
-                      }
+                      echo '<a class="btn btn-dark" href="historia.php" name="historia" role="button">Zobacz historie</a><br/><br/>';
+                      echo '<a class="btn btn-dark" href="add_user.php" name="add_user" role="button">Uzupełnij dane</a><br/><br/></div>';
+                      
+                     }
                       
                       ?>
             

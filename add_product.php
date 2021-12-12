@@ -82,18 +82,17 @@ $kat->closeCursor();
         <select name="kategoria" id="kategoria" class="form-select" >
         <?php
  $nad=$pdo->query ('select * from kategorie where id_nadrz is null');
- foreach($nad as $row)
- {
-$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$row['id_kat']);
-   foreach($kat as $rekord)
+ $nadd = $nad->fetch();
+
+$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$nadd['id_kat']);
+$katt = $kat->fetchAll();
+   foreach($katt as $rekord)
    {
      echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
                       
    }
 
 $kat->closeCursor();
-  }
-  $nad->closeCursor();
 ?>
         </select>
                       </div>

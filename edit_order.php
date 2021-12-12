@@ -45,15 +45,15 @@ $result2 = $stmt2->fetchAll();
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="nr_telefonu">nr_telefonu</label>
-                        <input type="number" id="nr_telefonu" required name="nr_telefonu" class="form-control" value="<?php if(isset($_POST['nr_telefonu'])) echo $_POST['nr_telefonu']; else echo $result["nr_telefonu"];  ?>">
+                        <input  required type="text" pattern="^[0-9\-\+]{9}$" name="nr_telefonu" class="form-control" value="<?php if(isset($_POST['nr_telefonu'])) echo $_POST['nr_telefonu']; else echo $result["nr_telefonu"];  ?>">
                       </div>
                     </div>
               </div>
               <div class="row">
-                    <div class="col-md-6">
+                <div class="col-md-6">
                       <div class="form-group">
-                        <label for="id_platnosci">id_platnosci</label>
-                        <input type="text" id="id_platnosci" required name="id_platnosci" class="form-control" value="<?php if(isset($_POST['id_platnosci'])) echo $_POST['id_platnosci']; else echo $result["id_platnosci"];  ?>">
+                        <label for="data_zamowienia">data_zamowienia</label>
+                        <input disabled type="text" id="data_zamowienia" required name="data_zamowienia" class="form-control" value="<?php if(isset($_POST['data_zamowienia'])) echo $_POST['data_zamowienia']; else echo $result["data_zamowienia"];  ?>">
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -64,16 +64,11 @@ $result2 = $stmt2->fetchAll();
                     </div>
               </div>
               <div class="row">
-              <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="data_zamowienia">data_zamowienia</label>
-                        <input type="text" id="data_zamowienia" required name="data_zamowienia" class="form-control" value="<?php if(isset($_POST['data_zamowienia'])) echo $_POST['data_zamowienia']; else echo $result["data_zamowienia"];  ?>">
-                      </div>
-                    </div>
+              
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="data_realizacji">data_realizacji</label>
-                        <input type="text" id="data_realizacji" name="data_realizacji" class="form-control" value="<?php if(isset($_POST['data_realizacji'])){$today= date("Y-m-d H:i:s"); $_POST['data_realizacji']=$today; echo $_POST['data_realizacji'];}   else echo $result["data_realizacji"];    ?>">
+                        <input  type="date" id="data_realizacji" name="data_realizacji" class="form-control" value="<?php if(isset($_POST['data_realizacji'])){$today= date("Y-m-d H:i:s"); $_POST['data_realizacji']=$today; echo $_POST['data_realizacji'];}   else echo $result["data_realizacji"];    ?>">
                       </div>
                     </div>
               </div>
@@ -120,29 +115,32 @@ $result2 = $stmt2->fetchAll();
                     <div class="col-md-6">
                         
                         <label for="zdjecie">Zdjęcie główne</label>
+                        <?php
+                    echo'
+                      <img src="/'.$result['zdjecie'].'" width="300px" height="auto" class="figure-img img-fluid rounded" alt="...">
+                      ';
                         
-                        <img src="<?php echo'/'.$result['zdjecie']; ?>" width="300px" height="auto" class="figure-img img-fluid rounded" alt="...">
-
+                      ?>
                       </div>
                       
                     <div class="col-md-6">
                       <div class="row">
                       <div class="form-group">
                         <label for="nazwa">Nazwa</label>
-                        <input type="text" id="nazwa" required name="nazwa" class="form-control" value="<?php if(isset($_POST['nazwa'])) echo $_POST['nazwa']; else echo $result["nazwa"];  ?>">
+                        <input disabled type="text" id="nazwa" required name="nazwa" class="form-control" value="<?php if(isset($_POST['nazwa'])) echo $_POST['nazwa']; else echo $result["nazwa"];  ?>">
                       </div>
               </div>
                         <div class="row">
                       <div class="form-group">
                         <label for="cena">Cena</label>
-                        <input min="0" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena']; else echo $result['cena']; ?>" required class="form-control" >
+                        <input disabled min="0" id="cena" name="cena" required value="<?php if(isset($_POST['cena'])) echo $_POST['cena']; else echo $result['cena']; ?>" required class="form-control" >
                       </div>
                     </div>
                     <div class="row">
                       <div class="form-group">
                         <label for="ilosc">Ilosc</label>
 
-                        <input min="0" id="ilosc" name="ilosc[<?php echo $result['id_rozmiaru'] ?>]" required value="<?php if(isset($_POST['ilosc'])) echo $_POST['ilosc']; else echo $result['ilosc']; ?>" required class="form-control" >
+                        <input type="number" min="0" id="ilosc" name="ilosc[<?php echo $result['id_rozmiaru'] ?>]" required value="<?php if(isset($_POST['ilosc'])) echo $_POST['ilosc']; else echo $result['ilosc']; ?>" required class="form-control" >
                       </div>
                     </div>
                     <?php
@@ -153,7 +151,7 @@ $result2 = $stmt2->fetchAll();
                     <div class="row">
                       <div class="form-group">
                         <label for="rozmiar">Rozmiar</label>
-                        <input min="0" id="rozmiar" name="rozmiar" required value="<?php if(isset($_POST['rozmiar'])) echo $_POST['rozmiar']; else echo $row['rozmiar']; ?>" required class="form-control" >
+                        <input disabled min="0" id="rozmiar" name="rozmiar" required value="<?php if(isset($_POST['rozmiar'])) echo $_POST['rozmiar']; else echo $row['rozmiar']; ?>" required class="form-control" >
                       </div>
                     </div>
                     <?php
@@ -219,12 +217,11 @@ $("#kategoria").html(result);
      $nazwisko = $_POST['nazwisko'];
      $email = $_POST['email'];
      $nr_telefonu = $_POST['nr_telefonu'];
-     $id_platnosci = $_POST['id_platnosci']; 
      $suma = $_POST['suma'];
      $data_zamowienia = $_POST['data_zamowienia'];
      $data_realizacji = $_POST['data_realizacji'];                 
-     $stmt = $pdo->prepare("UPDATE zamowienia set imie=?, nazwisko=?, email=?,nr_telefonu=?, id_platnosci=?, suma=?, data_zamowienia=?, data_realizacji=?, status=1  where id_zamowienia=".$id);
-     $stmt->execute([$imie, $nazwisko, $email,$nr_telefonu, $id_platnosci, $suma, $data_zamowienia, $data_realizacji]);
+     $stmt = $pdo->prepare("UPDATE zamowienia set imie=?, nazwisko=?, email=?,nr_telefonu=?, suma=?, data_zamowienia=?, data_realizacji=?, status=1  where id_zamowienia=".$id);
+     $stmt->execute([$imie, $nazwisko, $email,$nr_telefonu, $suma, $data_zamowienia, $data_realizacji]);
      $pdo=null;
     
 

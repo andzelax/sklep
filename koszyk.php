@@ -24,7 +24,9 @@ include 'navbar.php';
               <div class="row d-flex justify-content-center">
                 <div class="row">
                 <?php if(!isset($_SESSION['koszyk'])) {
-                    echo 'produktów nie ma >:(';
+                  echo'<div class="text-center">
+                  <h2>Brak produktów w koszyku</h2>
+                  </div>';
                 }else{
                   $total=0;
                     ?>
@@ -109,17 +111,6 @@ include 'navbar.php';
                       <div class="row">
                         <div class="col"><h6 class="text-center">Podsumowanie</h6></div>
                       </div>
-                      <div class="row n">
-                        <div class="col-8 ">
-                          <form class="form-floating">
-                            <input class="form-control me-2 bg-light btn-dark " style="color: black;" id="code" >
-                            <label for="code" >Podaj kod rabatowy</label>
-                          </form>
-                        </div>
-                          <div class="col-4 align-self-center">
-                          <button class="btn btn-dark "> Dodaj </button>
-                        </div>
-                      </div>
                       <div class="row">
                           <table class="me-3">
                           <tr>
@@ -145,7 +136,10 @@ include 'navbar.php';
                                 Suma
                               </th>
                               <td style="float:right">
-                                <?= number_format($total, 2, ',') ?> PLN
+                              <?php
+                              $total+=9.99;
+                              ?>
+                                <?= $total ?> PLN
                               </td>
                             </tr>
                         </table>

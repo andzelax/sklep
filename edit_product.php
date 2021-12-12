@@ -1,13 +1,25 @@
 <?php
 require_once("database.php");
-
+unset($_SESSION['error']);
 $id = $_GET["id_prod"];
 $stmt = $pdo->prepare("SELECT * from produkty WHERE id_prod=" . $id);
 $stmt->execute();
 $result = $stmt->fetch();
+$stmtt = $pdo->prepare("SELECT * from kategorie WHERE id_kat=" . $result['kategoria']);
+$stmtt->execute();
+$result2 = $stmtt->fetch();
 ?>
       <div class="content">
         <div class="container-fluid">
+        <?php 
+            if (isset($_SESSION['error'])):
+          ?>
+          <div class="alert alert-danger">
+              <?= $_SESSION['error'] ?>
+          </div>
+          <?php endif;
+          unset($_SESSION['error']);
+          ?>
           <form action="#" method="post" id="manage-prod" enctype="multipart/form-data">
           <div class="row">
          <div class="col-md-7">
@@ -131,15 +143,25 @@ $result = $stmt->fetch();
                       <label for="id_nadrz" class="form-label">Kategoria główna: </label>
                         <select id="id_nadrz" name="id_nadrz" class="form-select">
                                             <?php
+ $aktualny2 = $result2['id_nadrz'];
+ $kat=$pdo->query ('select * from kategorie where id_nadrz is null');
+ foreach($kat as $rekord)
+ {
+  if(isset($_POST['zapisz'])){
+    if ($rekord['id_kat'] == $_POST['kategoria']){
+        echo '<option selected="selected" value=' . $rekord['id_kat'] . '>' .$rekord['kategoria'].'</option>';
+     } else{
+        echo '<option value=' . $rekord['id_kat'] . '>' .$rekord['kategoria'].'</option>';}
+}else
+  if ($rekord['id_kat'] == $aktualny2) {echo '<option selected="selected" value=' . $rekord['id_kat'] . '>' .$rekord['kategoria'].'</option>';
+  }else{
+   echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
                     
-                    $kat=$pdo->query ('select * from kategorie where id_nadrz is null');
-                       foreach($kat as $rekord)
-                       {
-                         echo '<option value='.$rekord['id_kat'].'>'.$rekord['kategoria'].'</option>';
-                                          
-                       }
-                   
+ }
+ }
 $kat->closeCursor();
+
+
 ?>
    </select> 
 </div>
@@ -150,18 +172,12 @@ $kat->closeCursor();
         <select name="kategoria" id="kategoria" class="form-select" >
         <?php
         $aktualny = $result['kategoria'];
- $nad=$pdo->query ('select * from kategorie where id_nadrz is null');
- foreach($nad as $rekord)
- {
-$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$rekord['id_kat']);
-   foreach($kat as $row)
+
+$kat=$pdo->query ('select * from kategorie where id_nadrz = '.$result2['id_nadrz']);
+$katt=$kat->fetchAll();
+   foreach($katt as $row)
    {
-    if(isset($_POST['zapisz'])){
-      if ($row['id_kat'] == $_POST['kategoria']){
-          echo '<option selected="selected" value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';
-       } else{
-          echo '<option value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';}
-  }else
+    
   {
       if ($row['id_kat'] == $aktualny) {echo '<option selected="selected" value=' . $row['id_kat'] . '>' .$row['kategoria'].'</option>';
       }else{
@@ -170,8 +186,6 @@ $kat=$pdo->query ('select * from kategorie where id_nadrz = '.$rekord['id_kat'])
    }
 
 $kat->closeCursor();
-  }
-  $nad->closeCursor();
 ?>
         </select>
                       </div>
@@ -226,7 +240,7 @@ $("#kategoria").html(result);
         }
     
 
-    if(isset($_POST['zapisz'])){
+    if(isset($_POST['zapisz']) && $_POST['cena']>=0){
       if(isset($_FILES['zdjecie_dod'])){
         $id=$_POST['zapisz'];
          if(count($_FILES["zdjecie_dod"]["name"]) > 0){
@@ -251,11 +265,16 @@ $("#kategoria").html(result);
       $id=$_POST['zapisz'];
      $nazwa = $_POST['nazwa'];
      $opis =  nl2br($_POST['opis']);
-      $cena = $_POST['cena'];
       $id_kat = $_POST['kategoria'];                     
-     $stmt = $pdo->prepare("UPDATE produkty set nazwa=?, opis=?, cena=?,kategoria=? where id_prod=".$id);
-     $stmt->execute([$nazwa, $opis, $cena,$id_kat]);
+     $stmt = $pdo->prepare("UPDATE produkty set nazwa=?, opis=?,kategoria=? where id_prod=".$id);
+     $stmt->execute([$nazwa, $opis,$id_kat]);
+     $stmtt = $pdo->prepare('update produkty set cena = :cena where id_prod='.$id);
+      $stmtt->bindValue(':cena', $_POST['cena'], PDO::PARAM_STR);
+      $stmtt->execute();
+      unset($_SESSION['error']);
      echo '<meta http-equiv="refresh" content="0;url=./panel.php?page=produkty">';
+    } else {
+      $_SESSION['error'] = 'Nieprawidłowa cena';
     }
      if(isset($_POST['zapisz']) && $_FILES['zdjecie']){
 

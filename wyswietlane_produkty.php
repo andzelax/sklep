@@ -52,7 +52,7 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                     foreach($prod as $row){
                       echo'<div class="col-lg-4"><figure class="figure">';
                       echo'<a href="produkt.php?product='.$row['id_prod'].'" ><img src="'.$row['zdjecie'].'" class="d-block w-100 figure-img img-fluid rounded" alt="..."></a>';
-                      echo'<figcaption class="figure-caption text-center">A caption for the above image.</figcaption>';
+                      echo'<figcaption class="figure-caption text-center">'.$row['nazwa'].'</figcaption>';
                       echo'</figure></div>';
                     }
                     echo'</div>';
@@ -69,7 +69,7 @@ $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                     foreach($all as $roww){
                       echo'<div class="col-lg-4"><figure class="figure">';
                       echo'<a href="produkt.php?product='.$roww['id_prod'].'" ><img src="'.$roww['zdjecie'].'" class="d-block w-100 figure-img img-fluid rounded" alt="..."></a>';
-                      echo'<figcaption class="figure-caption text-center">A caption for the above image.</figcaption>';
+                      echo'<figcaption class="figure-caption text-center">'.$roww['nazwa'].'</figcaption>';
                       echo'</figure></div>';
                     }
                     echo'</div>';

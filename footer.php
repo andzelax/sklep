@@ -21,58 +21,20 @@
                 <div class="card-header">
                   Odwiedź nas!
                 </div>
-                <div class="card-body bg-black col-lg-12 " >
-                  <div class="row">
-                  <div class="col-lg-2 col-md-12" >
-                    <a href="kobiety.html" style="color : gray">Kobieta</a>
-                  </div>
-                  <div class="col-lg-2 col-md-12" >
-                    <a href="mezczyzni.html" style="color : gray">Mężczyzna</a>
-                  </div>
-                    <div class="col-lg-2 col-md-12" >
-                      <a href="kontakt.html" style="color : gray">Kontakt</a>
-                    </div>
-                    <div class="col-lg-2 col-md-12" data-bs-toggle="modal" data-bs-target="#staticBackdrops">
-                      <a href="#" style="color : gray">Regulamin</a>
-                    </div>
-                    <div class="modal fade" id="staticBackdrops" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabels" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabels">Regulamin</h5>
-                            <button type="button" class="btn-close btn-dark bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <span style="color: black;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis eaque ea doloremque nam magni. Eligendi error perferendis, corporis repudiandae at nesciunt maxime hic sit suscipit! Voluptate porro rem aspernatur eos. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis eaque ea doloremque nam magni. Eligendi error perferendis, corporis repudiandae at nesciunt maxime hic sit suscipit! Voluptate porro rem aspernatur eos. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis eaque ea doloremque nam magni. Eligendi error perferendis, corporis repudiandae at nesciunt maxime hic sit suscipit! Voluptate porro rem aspernatur eos.
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div> 
-                    <div class="col-lg-2 col-md-12 " data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                      <a href="#" style="color : gray">Bądź na bieżąco</a>
-                    </div>
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Subskrybuj nasz Newsletter</h5>
-                            <button type="button" class="btn-close btn-dark bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form class="col-12 mb-2 form-floating d-flex">
-                              <input type="email" class="form-control me-2 bg-light btn-dark " style="color: black;" id="floatingInputValue" >
-                              <label for="floatingInputValue" >Podaj e-mail</label>
-                            </form>
-                            <div class="col">
-                              <button type="submit" class="btn-dark btn align-self-center" >Potwierdź</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>  
-                    <div class="col-lg-2 col-md-12" >
-                      <a href="koszyk.html" style="color : gray">Koszyk</a>
+                <div class="card-body bg-black col-lg-12 text-center" >
+                  <div class="row ">
+                  <?php
+                  $kategorie=$pdo->query('select * from kategorie where id_nadrz is null');
+                  $kat=$kategorie->fetchAll();
+                  foreach($kat as $cat){
+                    echo'<div class="col-lg-4 col-md-12" >';
+                    echo '<a style="color : gray" name="category" href="wyswietlane_produkty.php?id_kat='.$cat['id_kat'].'"">'.$cat['kategoria'].'</a>';
+                    echo '</div>';
+                  }
+                ?>
+
+                    <div class="col-lg-4 col-md-12" >
+                      <a href="koszyk.php" style="color : gray">Koszyk</a>
                     </div>
                     </div>
                     <div class="row" style="clear: both; padding-top: 30px; float: right;">

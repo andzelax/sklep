@@ -27,7 +27,7 @@ include 'navbar.php';
           $haslo1 =$_POST['haslo1'];
           $haslo2 =$_POST['haslo2'];
           if($haslo1!=$haslo2){
-            echo'Hasła nie są takie same';
+            $_SESSION['error'] = 'Hasła nie są takie same';
           }else{
             $hash=password_hash($haslo2,PASSWORD_DEFAULT);
             $dodawanie=$pdo->prepare('insert into uzytkownicy (email,haslo) values (?,?)');
@@ -41,6 +41,15 @@ include 'navbar.php';
     ?>
   <main>
         <div id="container" style="overflow: hidden;" >
+        <?php 
+            if (isset($_SESSION['error'])):
+          ?>
+          <div class="alert alert-danger">
+              <?= $_SESSION['error'] ?>
+          </div>
+          <?php endif;
+          unset($_SESSION['error']);
+          ?>
             <div class="row" style="padding-left: 25px;">
               <div class="row">
                 <div class="col-lg-12 d-flex justify-content-center">

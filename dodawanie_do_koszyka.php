@@ -23,4 +23,7 @@ $_SESSION['koszyk'][$id] = [
 ];
 echo '<meta http-equiv="refresh" content="1;url=./koszyk.php">';
 }
+else echo'<div class="text-center">
+<h2>Brak rozmiaru</h2>
+</div>';
 ?>
